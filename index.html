@@ -384,6 +384,16 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
   const clean = location.pathname.replace(/index\.html$/i,'') + location.search + location.hash;
   history.replaceState(null, '', clean || '/');
 }
+
+/* Tab title swap: when someone switches away to another tab, change the
+   title to a call-to-action; restore the original title when they come back. */
+(function(){
+  const originalTitle = document.title;
+  const awayTitle = "Book Today - Royale Supercars";
+  document.addEventListener('visibilitychange', function(){
+    document.title = document.hidden ? awayTitle : originalTitle;
+  });
+})();
 </script>
 
 <nav id="nav">
@@ -976,6 +986,41 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
     const d=document,s=d.createElement("script");s.type="module";
     s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
   })();
+</script>
+<script>
+/* Tab-away lure: when the visitor switches tabs, the browser tab title
+   animates to invite them back. The instant they return, it snaps back
+   to the real page title exactly as it was — nothing else changes. */
+(function(){
+  const originalTitle = document.title;
+  const lureFrames = [
+    'Your Ride Awaits',
+    'Your Ride Awaits.',
+    'Your Ride Awaits..',
+    'Your Ride Awaits...'
+  ];
+  let frameIndex = 0;
+  let intervalId = null;
+
+  function startLure(){
+    if(intervalId) return;
+    frameIndex = 0;
+    document.title = lureFrames[0];
+    intervalId = setInterval(function(){
+      frameIndex = (frameIndex + 1) % lureFrames.length;
+      document.title = lureFrames[frameIndex];
+    }, 500);
+  }
+
+  function stopLure(){
+    if(intervalId){ clearInterval(intervalId); intervalId = null; }
+    document.title = originalTitle;
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ startLure(); } else { stopLure(); }
+  });
+})();
 </script>
 </body>
 </html>
