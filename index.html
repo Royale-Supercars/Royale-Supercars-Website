@@ -377,11 +377,19 @@ footer{border-top:1px solid var(--line);background:#060606}
 </style>
 </head>
 <body>
+<script>
+/* Clean the URL bar: if someone lands on /index.html, silently swap it
+   to / (keeping any #section) without reloading or changing anything else. */
+if(location.pathname.toLowerCase().endsWith('/index.html')){
+  const clean = location.pathname.replace(/index\.html$/i,'') + location.search + location.hash;
+  history.replaceState(null, '', clean || '/');
+}
+</script>
 
 <nav id="nav">
-  <a href="#top" class="logo logo-nav" aria-label="Royale Supercars"><img class="crest" src="images/img_003.png" alt="Royale Supercars"></a>
+  <a href="#home" class="logo logo-nav" aria-label="Royale Supercars"><img class="crest" src="images/img_003.png" alt="Royale Supercars"></a>
   <ul class="nav-links">
-    <li><a href="#top">Home</a></li>
+    <li><a href="#home">Home</a></li>
     <li><a href="#fleet">Fleet</a></li>
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#about">About Us</a></li>
@@ -392,7 +400,7 @@ footer{border-top:1px solid var(--line);background:#060606}
   <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
 </nav>
 <div class="mmenu" id="mmenu">
-  <a href="#top">Home</a>
+  <a href="#home">Home</a>
   <a href="#fleet">Fleet</a>
   <a href="#reviews">Reviews</a>
   <a href="#about">About Us</a>
@@ -402,7 +410,7 @@ footer{border-top:1px solid var(--line);background:#060606}
 </div>
 
 <!-- ================= HERO ================= -->
-<header id="top">
+<header id="home">
   <div class="hero-bg placeholder" id="heroBg"></div>
   <div class="hero-shade"></div>
   <div class="hero-inner">
@@ -572,7 +580,7 @@ footer{border-top:1px solid var(--line);background:#060606}
 <footer>
   <div class="foot-main">
     <div class="foot-brand">
-      <a href="#top" class="logo"><img class="crest" src="images/img_004.png" alt="Royale Supercars crest">Royale<b>&nbsp;Supercars</b></a>
+      <a href="#home" class="logo"><img class="crest" src="images/img_004.png" alt="Royale Supercars crest">Royale<b>&nbsp;Supercars</b></a>
       <p>Dubai's premium supercar rental and chauffeur service. Delivered to your door, any hour, every day.</p>
     </div>
     <div class="foot-col">
@@ -592,7 +600,7 @@ footer{border-top:1px solid var(--line);background:#060606}
         <li><a href="#" class="js-wa" id="footWa">WhatsApp</a></li>
         <li><a href="#" id="footIg" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="#" id="footTt" target="_blank" rel="noopener">TikTok</a></li>
-        <li><a href="#top">Dubai, UAE</a></li>
+        <li><a href="#home">Dubai, UAE</a></li>
       </ul>
     </div>
     <div class="foot-col">
@@ -608,7 +616,7 @@ footer{border-top:1px solid var(--line);background:#060606}
   <div class="foot-bar">
     <div class="in">
       <span>© <span id="yr"></span> Royale Supercars - Dubai, UAE</span>
-      <a href="#top">Back to top ↑</a>
+      <a href="#home">Back to top ↑</a>
     </div>
   </div>
 </footer>
