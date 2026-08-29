@@ -116,6 +116,10 @@ nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-co
 .nav-links a:hover{color:#fff}
 .nav-links a:hover::after{width:100%}
 .nav-book{font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#0a0a0a;background:var(--gold);padding:11px 24px;border-radius:2px;transition:.35s var(--ease)}
+.curr-sel{background:transparent;border:1px solid var(--line);color:var(--text);font-family:var(--body);font-size:.78rem;
+  padding:7px 10px;border-radius:4px;margin-right:14px;cursor:pointer;appearance:none;text-align:center}
+.curr-sel:hover{border-color:var(--gold-soft)}
+.curr-sel-mobile{margin:10px 0;width:fit-content}
 .nav-book:hover{background:#e0bc66;transform:translateY(-1px);box-shadow:0 10px 30px rgba(201,162,75,.25)}
 .burger{display:none;background:none;border:none;cursor:pointer;z-index:102;flex-direction:column;gap:6px;padding:4px}
 .burger i{display:block;width:24px;height:1.5px;background:var(--text);transition:.4s var(--ease)}
@@ -366,6 +370,27 @@ footer{border-top:1px solid var(--line);background:#060606}
 
 /* ---------- whatsapp float ---------- */
 .wa-float{position:fixed;right:24px;bottom:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(34,165,92,.35);transition:.35s var(--ease)}
+.wa-badge{position:fixed;right:24px;bottom:88px;z-index:90;background:#0d0d0e;border:1px solid var(--line);color:var(--text);
+  font-size:.75rem;padding:8px 14px;border-radius:999px;display:flex;align-items:center;gap:7px;box-shadow:0 10px 24px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(6px);animation:waBadgeIn .5s var(--ease) 1.2s forwards}
+.wa-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--wa);flex:none;animation:waPulse 1.6s ease-in-out infinite}
+@keyframes waBadgeIn{to{opacity:1;transform:translateY(0)}}
+@keyframes waPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,165,92,.55)}50%{box-shadow:0 0 0 5px rgba(34,165,92,0)}}
+@media (max-width:640px){.wa-badge{font-size:.68rem;padding:6px 11px;right:18px;bottom:80px}.wa-float{right:18px;bottom:18px}}
+
+/* ---------- exit-intent offer ---------- */
+.exit-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .35s var(--ease);padding:20px}
+.exit-overlay.open{opacity:1;pointer-events:auto}
+.exit-card{background:#0d0d0e;border:1px solid var(--gold-soft);border-radius:8px;max-width:420px;width:100%;
+  padding:36px 32px;text-align:center;transform:translateY(14px) scale(.97);transition:transform .35s var(--ease);position:relative}
+.exit-overlay.open .exit-card{transform:translateY(0) scale(1)}
+.exit-card .crest{height:44px;margin:0 auto 18px}
+.exit-card h3{font-family:var(--display);font-size:1.35rem;margin-bottom:10px;color:var(--gold)}
+.exit-card p{color:var(--muted);font-size:.92rem;margin-bottom:22px;line-height:1.6}
+.exit-card .btn-gold{display:inline-block;width:100%}
+.exit-close{position:absolute;top:12px;right:14px;background:none;border:0;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;padding:6px}
+.exit-close:hover{color:var(--text)}
 .wa-float svg{width:28px;height:28px;fill:#fff}
 .wa-float:hover{transform:scale(1.08);box-shadow:0 14px 38px rgba(34,165,92,.5)}
 
@@ -384,16 +409,6 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
   const clean = location.pathname.replace(/index\.html$/i,'') + location.search + location.hash;
   history.replaceState(null, '', clean || '/');
 }
-
-/* Tab title swap: when someone switches away to another tab, change the
-   title to a call-to-action; restore the original title when they come back. */
-(function(){
-  const originalTitle = document.title;
-  const awayTitle = "Book Today - Royale Supercars";
-  document.addEventListener('visibilitychange', function(){
-    document.title = document.hidden ? awayTitle : originalTitle;
-  });
-})();
 </script>
 
 <nav id="nav">
@@ -406,6 +421,12 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
     <li><a href="#faq">FAQs</a></li>
     <li><a href="/loyalty">Loyalty</a></li>
   </ul>
+  <select id="currSel" class="curr-sel" aria-label="Currency">
+    <option value="AED">AED</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
   <a href="#" class="nav-book js-wa">Book via WhatsApp</a>
   <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
 </nav>
@@ -416,6 +437,12 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
   <a href="#about">About Us</a>
   <a href="#faq">FAQs</a>
   <a href="/loyalty">Loyalty</a>
+  <select id="currSelMobile" class="curr-sel curr-sel-mobile" aria-label="Currency">
+    <option value="AED">AED</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
   <a href="#" class="js-wa" style="color:var(--gold)">Book via WhatsApp</a>
 </div>
 
@@ -634,6 +661,17 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
 <a href="#" class="wa-float js-wa" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.5c1.2.6 2.5.9 3.8.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.2 0-2.4-.3-3.5-.8l-.7-.4-4.9.9 1-4.7-.5-.8c-.9-1.5-1.4-3.2-1.4-5 0-5.4 4.5-9.8 10-9.8s10 4.4 10 9.8-4.5 9.8-10 9.8zm5.5-7.3c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.3c.2.2 2.3 3.6 5.7 5 .8.3 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.8-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>
 </a>
+<div class="wa-badge" id="waBadge"><span class="dot"></span><span>Usually replies in minutes</span></div>
+
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-card">
+    <button class="exit-close" id="exitClose" aria-label="Close">&times;</button>
+    <img class="crest" src="images/img_003.png" alt="Royale Supercars">
+    <h3>Before you go...</h3>
+    <p>Get 5% off your first booking. Message us on WhatsApp now and we'll apply it when you book.</p>
+    <a href="#" class="btn btn-gold js-wa" id="exitWaBtn">Claim 5% Off on WhatsApp</a>
+  </div>
+</div>
 
 <script>
 /* Embedded hero photo (cropped from your upload). To use hosted files instead,
@@ -763,7 +801,7 @@ function carCard(c,cat){
           <div class="car-brand">${c.brand}</div>
           <div class="car-name">${c.name}</div>
         </div>
-        <div class="car-price"><b>AED ${c.price}</b><span>${cat==='Chauffeur'?'per day · all-inclusive':'per day · no deposit'}</span></div>
+        <div class="car-price" data-aed="${String(c.price).replace(/,/g,'')}"><b class="price-val">AED ${c.price}</b><span>${cat==='Chauffeur'?'per day · all-inclusive':'per day · no deposit'}</span></div>
       </div>
       <div class="car-chips">${(c.feats||[]).map(f=>`<span>${f}</span>`).join('')}</div>
       ${c.allFeats?`<button class="feat-toggle">All features<span class="chev">▾</span></button>
@@ -1021,6 +1059,102 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
   });
   window.addEventListener('blur', function(){ if(document.hidden) startLure(); });
   window.addEventListener('focus', stopLure);
+})();
+</script>
+
+<script>
+/* Currency toggle: converts every displayed car price from AED to the
+   chosen currency. Fetches live rates once, falls back to fixed
+   approximate rates if the request fails or is offline. Only changes
+   the price text — nothing else about the cars or layout. */
+(function(){
+  const FALLBACK_RATES = { AED: 1, USD: 0.272, EUR: 0.252, GBP: 0.216 };
+  const SYMBOLS = { AED: 'AED', USD: '$', EUR: '€', GBP: '£' };
+  let rates = FALLBACK_RATES;
+
+  function applyCurrency(curr){
+    document.querySelectorAll('.car-price[data-aed]').forEach(function(el){
+      const aed = parseFloat(el.getAttribute('data-aed'));
+      const valEl = el.querySelector('.price-val');
+      if(!valEl || isNaN(aed)) return;
+      if(curr === 'AED'){
+        valEl.textContent = 'AED ' + aed.toLocaleString();
+      } else {
+        const converted = Math.round(aed * (rates[curr] || FALLBACK_RATES[curr]));
+        valEl.textContent = SYMBOLS[curr] + converted.toLocaleString();
+      }
+    });
+    try{ localStorage.setItem('royaleCurrency', curr); }catch(e){}
+  }
+
+  function initSelectors(){
+    const saved = (function(){ try{ return localStorage.getItem('royaleCurrency'); }catch(e){ return null; } })() || 'AED';
+    document.querySelectorAll('#currSel, #currSelMobile').forEach(function(sel){
+      sel.value = saved;
+      sel.addEventListener('change', function(){
+        applyCurrency(this.value);
+        document.querySelectorAll('#currSel, #currSelMobile').forEach(function(other){ other.value = this.value; }.bind(this));
+      });
+    });
+    applyCurrency(saved);
+  }
+
+  // Fetch live rates once; on success, re-apply whichever currency is active.
+  fetch('https://api.exchangerate-api.com/v4/latest/AED')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && data.rates){
+        rates = { AED: 1, USD: data.rates.USD || FALLBACK_RATES.USD, EUR: data.rates.EUR || FALLBACK_RATES.EUR, GBP: data.rates.GBP || FALLBACK_RATES.GBP };
+        const active = document.getElementById('currSel');
+        if(active) applyCurrency(active.value);
+      }
+    })
+    .catch(function(){ /* silently keep fallback rates */ });
+
+  document.addEventListener('DOMContentLoaded', initSelectors);
+  if(document.readyState !== 'loading') initSelectors();
+})();
+</script>
+
+<script>
+/* Exit-intent offer: shows once per visit when the mouse moves up toward
+   the browser's tab/close area (desktop only - this signal doesn't exist
+   on touch devices, so mobile visitors simply never see it, no fake trigger). */
+(function(){
+  const overlay = document.getElementById('exitOverlay');
+  const closeBtn = document.getElementById('exitClose');
+  const waBtn = document.getElementById('exitWaBtn');
+  if(!overlay) return;
+
+  let shown = false;
+  try{ shown = sessionStorage.getItem('royaleExitShown') === '1'; }catch(e){}
+
+  function openOverlay(){
+    if(shown) return;
+    shown = true;
+    try{ sessionStorage.setItem('royaleExitShown','1'); }catch(e){}
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('mouseleave', function(e){
+    if(e.clientY <= 0) openOverlay();
+  });
+
+  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeOverlay(); });
+
+  if(waBtn && typeof waLink === 'function'){
+    waBtn.href = waLink('a car — 5% off my first booking');
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener';
+  }
 })();
 </script>
 </body>
