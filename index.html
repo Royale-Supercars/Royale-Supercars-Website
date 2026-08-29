@@ -127,7 +127,7 @@ nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-co
 }
 .nav-book:hover{background:#e0bc66;transform:translateY(-1px);box-shadow:0 10px 30px rgba(201,162,75,.25)}
 .burger{display:none;background:none;border:none;cursor:pointer;z-index:102;flex-direction:column;gap:6px;padding:4px}
-.burger i{display:block;width:24px;height:1.5px;background:var(--text);transition:.4s var(--ease)}
+.burger i{display:block;width:24px;height:1.5px;background:var(--text);transform-origin:center;transition:transform .35s var(--ease),opacity .25s var(--ease)}
 @media(max-width:860px){.nav-book{display:none}}
 @media(max-width:640px){.nav-links{display:none}.burger{display:flex}}
 .mmenu{position:fixed;inset:0;background:rgba(8,8,8,.97);backdrop-filter:blur(8px);z-index:101;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;opacity:0;visibility:hidden;transition:.5s}
@@ -138,7 +138,7 @@ nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-co
 .mmenu.open a:nth-child(4){transition-delay:.15s}.mmenu.open a:nth-child(5){transition-delay:.2s}
 .mmenu a:hover{color:var(--gold)}
 body.mopen .burger i:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
-body.mopen .burger i:nth-child(2){opacity:0}
+body.mopen .burger i:nth-child(2){opacity:0;transform:scaleX(0)}
 body.mopen .burger i:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
 
 /* ---------- hero ---------- */
@@ -1133,11 +1133,16 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
   const waBtn = document.getElementById('exitWaBtn');
   if(!overlay) return;
 
+  // Permanent: once they've actually claimed the offer, never show again on this device.
+  let claimed = false;
+  try{ claimed = localStorage.getItem('royaleExitClaimed') === '1'; }catch(e){}
+
+  // Per-session: don't show more than once in the same visit, even if not claimed.
   let shown = false;
   try{ shown = sessionStorage.getItem('royaleExitShown') === '1'; }catch(e){}
 
   function openOverlay(){
-    if(shown) return;
+    if(shown || claimed) return;
     shown = true;
     try{ sessionStorage.setItem('royaleExitShown','1'); }catch(e){}
     overlay.classList.add('open');
@@ -1161,6 +1166,9 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
     waBtn.href = waLink('a car — 5% off my first booking');
     waBtn.target = '_blank';
     waBtn.rel = 'noopener';
+    waBtn.addEventListener('click', function(){
+      try{ localStorage.setItem('royaleExitClaimed','1'); }catch(e){}
+    });
   }
 })();
 </script>
