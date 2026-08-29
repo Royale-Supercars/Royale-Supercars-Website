@@ -97,7 +97,7 @@ a{color:inherit;text-decoration:none}
 
 /* ---------- nav ---------- */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:0;left:0;right:0;z-index:150;
   display:flex;align-items:center;justify-content:space-between;
   padding:16px clamp(22px,5vw,72px);
   background:transparent;
@@ -116,13 +116,14 @@ nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-co
 .nav-links a:hover{color:#fff}
 .nav-links a:hover::after{width:100%}
 .nav-book{font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#0a0a0a;background:var(--gold);padding:11px 24px;border-radius:2px;transition:.35s var(--ease)}
+.nav-actions{display:flex;align-items:center;gap:14px}
 .curr-sel{background:transparent;border:1px solid var(--line);color:var(--text);font-family:var(--body);font-size:.78rem;
-  padding:7px 10px;border-radius:4px;margin-right:14px;cursor:pointer;appearance:none;text-align:center}
+  padding:7px 10px;border-radius:4px;cursor:pointer;appearance:none;text-align:center}
 .curr-sel:hover{border-color:var(--gold-soft)}
 .curr-sel-mobile{display:none}
 @media(max-width:640px){
   #currSel{display:none}
-  .curr-sel-mobile{display:inline-block;margin-right:10px;font-size:.72rem;padding:6px 8px}
+  .curr-sel-mobile{display:inline-block;font-size:.72rem;padding:6px 8px}
 }
 .nav-book:hover{background:#e0bc66;transform:translateY(-1px);box-shadow:0 10px 30px rgba(201,162,75,.25)}
 .burger{display:none;background:none;border:none;cursor:pointer;z-index:102;flex-direction:column;gap:6px;padding:4px}
@@ -425,20 +426,22 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
     <li><a href="#faq">FAQs</a></li>
     <li><a href="/loyalty">Loyalty</a></li>
   </ul>
-  <select id="currSel" class="curr-sel" aria-label="Currency">
-    <option value="AED">AED</option>
-    <option value="USD">USD</option>
-    <option value="EUR">EUR</option>
-    <option value="GBP">GBP</option>
-  </select>
-  <a href="#" class="nav-book js-wa">Book via WhatsApp</a>
-  <select id="currSelMobile" class="curr-sel curr-sel-mobile" aria-label="Currency">
-    <option value="AED">AED</option>
-    <option value="USD">USD</option>
-    <option value="EUR">EUR</option>
-    <option value="GBP">GBP</option>
-  </select>
-  <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+  <div class="nav-actions">
+    <a href="#" class="nav-book js-wa">Book via WhatsApp</a>
+    <select id="currSel" class="curr-sel" aria-label="Currency">
+      <option value="AED">AED</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
+    </select>
+    <select id="currSelMobile" class="curr-sel curr-sel-mobile" aria-label="Currency">
+      <option value="AED">AED</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
+    </select>
+    <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+  </div>
 </nav>
 <div class="mmenu" id="mmenu">
   <a href="#home">Home</a>
