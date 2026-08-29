@@ -990,26 +990,25 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
 <script>
 /* Tab-away lure: when the visitor switches tabs, the browser tab title
    animates to invite them back. The instant they return, it snaps back
-   to the real page title exactly as it was — nothing else changes. */
+   to the real page title exactly as it was — nothing else changes.
+   Rebuilt to always clear/restart cleanly on every switch, not just the first. */
 (function(){
   const originalTitle = document.title;
-  const lureFrames = [
-    'Your Ride Awaits',
-    'Your Ride Awaits.',
-    'Your Ride Awaits..',
-    'Your Ride Awaits...'
-  ];
-  let frameIndex = 0;
+  const baseText = 'Your Ride Awaits';
+  const dotCounts = [0, 1, 2, 3];
+  let dotIndex = 0;
   let intervalId = null;
 
+  function tick(){
+    document.title = baseText + '.'.repeat(dotCounts[dotIndex]);
+    dotIndex = (dotIndex + 1) % dotCounts.length;
+  }
+
   function startLure(){
-    if(intervalId) return;
-    frameIndex = 0;
-    document.title = lureFrames[0];
-    intervalId = setInterval(function(){
-      frameIndex = (frameIndex + 1) % lureFrames.length;
-      document.title = lureFrames[frameIndex];
-    }, 500);
+    if(intervalId) clearInterval(intervalId);
+    dotIndex = 0;
+    tick();
+    intervalId = setInterval(tick, 350);
   }
 
   function stopLure(){
@@ -1020,6 +1019,8 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
   document.addEventListener('visibilitychange', function(){
     if(document.hidden){ startLure(); } else { stopLure(); }
   });
+  window.addEventListener('blur', function(){ if(document.hidden) startLure(); });
+  window.addEventListener('focus', stopLure);
 })();
 </script>
 </body>
