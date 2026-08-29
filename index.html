@@ -119,7 +119,11 @@ nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-co
 .curr-sel{background:transparent;border:1px solid var(--line);color:var(--text);font-family:var(--body);font-size:.78rem;
   padding:7px 10px;border-radius:4px;margin-right:14px;cursor:pointer;appearance:none;text-align:center}
 .curr-sel:hover{border-color:var(--gold-soft)}
-.curr-sel-mobile{margin:10px 0;width:fit-content}
+.curr-sel-mobile{display:none}
+@media(max-width:640px){
+  #currSel{display:none}
+  .curr-sel-mobile{display:inline-block;margin-right:10px;font-size:.72rem;padding:6px 8px}
+}
 .nav-book:hover{background:#e0bc66;transform:translateY(-1px);box-shadow:0 10px 30px rgba(201,162,75,.25)}
 .burger{display:none;background:none;border:none;cursor:pointer;z-index:102;flex-direction:column;gap:6px;padding:4px}
 .burger i{display:block;width:24px;height:1.5px;background:var(--text);transition:.4s var(--ease)}
@@ -428,6 +432,12 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
     <option value="GBP">GBP</option>
   </select>
   <a href="#" class="nav-book js-wa">Book via WhatsApp</a>
+  <select id="currSelMobile" class="curr-sel curr-sel-mobile" aria-label="Currency">
+    <option value="AED">AED</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
   <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
 </nav>
 <div class="mmenu" id="mmenu">
@@ -437,12 +447,6 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
   <a href="#about">About Us</a>
   <a href="#faq">FAQs</a>
   <a href="/loyalty">Loyalty</a>
-  <select id="currSelMobile" class="curr-sel curr-sel-mobile" aria-label="Currency">
-    <option value="AED">AED</option>
-    <option value="USD">USD</option>
-    <option value="EUR">EUR</option>
-    <option value="GBP">GBP</option>
-  </select>
   <a href="#" class="js-wa" style="color:var(--gold)">Book via WhatsApp</a>
 </div>
 
