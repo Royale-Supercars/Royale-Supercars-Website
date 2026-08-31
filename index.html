@@ -197,7 +197,7 @@ body.loaded .hero-ctas{opacity:1;transform:none}
     justify-content:center;flex-wrap:nowrap;width:100%;
     margin-top:auto;padding-top:24px;
   }
-  .hero-ctas .btn{flex:1;text-align:center;white-space:nowrap;padding-left:14px;padding-right:14px}
+  .hero-ctas .btn{flex:1;justify-content:center;text-align:center;white-space:nowrap;padding-left:14px;padding-right:14px}
 }
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:16px 32px;border-radius:2px;transition:.35s var(--ease);cursor:pointer;border:1px solid transparent}
 .btn-gold{background:var(--gold);color:#0a0a0a}
@@ -405,7 +405,10 @@ footer{border-top:1px solid var(--line);background:#060606}
 .foot-bar a:hover{color:var(--gold)}
 
 /* ---------- whatsapp float ---------- */
-.wa-float{position:fixed;right:24px;bottom:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(34,165,92,.35);transition:.35s var(--ease)}
+.wa-float{position:fixed;right:24px;bottom:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(34,165,92,.35);
+  transition:.35s var(--ease),opacity .5s var(--ease);
+  opacity:0;pointer-events:none}
+.wa-float.wa-visible{opacity:1;pointer-events:auto}
 .wa-badge{position:fixed;right:24px;bottom:88px;z-index:90;background:#0d0d0e;border:1px solid var(--line);color:var(--text);
   font-size:.75rem;padding:8px 14px;border-radius:999px;display:flex;align-items:center;gap:7px;box-shadow:0 10px 24px rgba(0,0,0,.35);
   opacity:0;transform:translateY(6px);animation:waBadgeIn .5s var(--ease) 1.2s forwards}
@@ -1017,6 +1020,17 @@ $('#yr').textContent=new Date().getFullYear();
   updateNavFade();
   const burger=$('#burger'),m=$('#mmenu');
   const t=()=>{m.classList.toggle('open');document.body.classList.toggle('mopen')};
+
+  /* WhatsApp float button: hidden over the hero, fades in once the visitor
+     scrolls into the next section ("Why Rent With Us"). */
+  const waFloat=$('.wa-float');
+  const whySection=document.getElementById('why');
+  if(waFloat && whySection){
+    const waIo=new IntersectionObserver(es=>es.forEach(en=>{
+      waFloat.classList.toggle('wa-visible', en.isIntersecting || en.boundingClientRect.top < 0);
+    }),{threshold:0});
+    waIo.observe(whySection);
+  }
   burger.onclick=t;
   m.querySelectorAll('a').forEach(a=>a.addEventListener('click',t));
 })();
