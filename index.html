@@ -411,9 +411,9 @@ footer{border-top:1px solid var(--line);background:#060606}
 .wa-float.wa-visible{opacity:1;pointer-events:auto}
 .wa-badge{position:fixed;right:24px;bottom:88px;z-index:90;background:#0d0d0e;border:1px solid var(--line);color:var(--text);
   font-size:.75rem;padding:8px 14px;border-radius:999px;display:flex;align-items:center;gap:7px;box-shadow:0 10px 24px rgba(0,0,0,.35);
-  opacity:0;transform:translateY(6px);animation:waBadgeIn .5s var(--ease) 1.2s forwards}
+  opacity:0;transform:translateY(6px);transition:opacity .5s var(--ease),transform .5s var(--ease);pointer-events:none}
+.wa-badge.wa-visible{opacity:1;transform:translateY(0)}
 .wa-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--wa);flex:none;animation:waPulse 1.6s ease-in-out infinite}
-@keyframes waBadgeIn{to{opacity:1;transform:translateY(0)}}
 @keyframes waPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,165,92,.55)}50%{box-shadow:0 0 0 5px rgba(34,165,92,0)}}
 @media (max-width:640px){.wa-badge{font-size:.68rem;padding:6px 11px;right:18px;bottom:80px}.wa-float{right:18px;bottom:18px}}
 
@@ -1021,13 +1021,16 @@ $('#yr').textContent=new Date().getFullYear();
   const burger=$('#burger'),m=$('#mmenu');
   const t=()=>{m.classList.toggle('open');document.body.classList.toggle('mopen')};
 
-  /* WhatsApp float button: hidden over the hero, fades in once the visitor
-     scrolls into the next section ("Why Rent With Us"). */
+  /* WhatsApp float button + badge: hidden over the hero, fade in together
+     once the visitor scrolls into the next section ("Why Rent With Us"). */
   const waFloat=$('.wa-float');
+  const waBadge=$('.wa-badge');
   const whySection=document.getElementById('why');
   if(waFloat && whySection){
     const waIo=new IntersectionObserver(es=>es.forEach(en=>{
-      waFloat.classList.toggle('wa-visible', en.isIntersecting || en.boundingClientRect.top < 0);
+      const visible = en.isIntersecting || en.boundingClientRect.top < 0;
+      waFloat.classList.toggle('wa-visible', visible);
+      if(waBadge) waBadge.classList.toggle('wa-visible', visible);
     }),{threshold:0});
     waIo.observe(whySection);
   }
