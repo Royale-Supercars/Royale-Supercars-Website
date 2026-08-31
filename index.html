@@ -1022,17 +1022,21 @@ $('#yr').textContent=new Date().getFullYear();
   const t=()=>{m.classList.toggle('open');document.body.classList.toggle('mopen')};
 
   /* WhatsApp float button + badge: hidden over the hero, fade in together
-     once the visitor scrolls into the next section ("Why Rent With Us"). */
+     once the visitor has scrolled past the hero into the next section.
+     Uses the same real-time scroll-position approach as the nav fade
+     above (proven reliable) instead of IntersectionObserver. */
   const waFloat=$('.wa-float');
   const waBadge=$('.wa-badge');
-  const whySection=document.getElementById('why');
-  if(waFloat && whySection){
-    const waIo=new IntersectionObserver(es=>es.forEach(en=>{
-      const visible = en.isIntersecting || en.boundingClientRect.top < 0;
+  const heroEl=document.getElementById('home');
+  if(waFloat && heroEl){
+    function updateWaVisibility(){
+      const heroBottom = heroEl.getBoundingClientRect().bottom;
+      const visible = heroBottom <= 0;
       waFloat.classList.toggle('wa-visible', visible);
       if(waBadge) waBadge.classList.toggle('wa-visible', visible);
-    }),{threshold:0});
-    waIo.observe(whySection);
+    }
+    window.addEventListener('scroll', updateWaVisibility, {passive:true});
+    updateWaVisibility();
   }
   burger.onclick=t;
   m.querySelectorAll('a').forEach(a=>a.addEventListener('click',t));
