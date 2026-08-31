@@ -198,6 +198,19 @@ body.loaded .hero-ctas{opacity:1;transform:none}
   }
   .hero-ctas .btn{flex:1;justify-content:center;text-align:center;white-space:nowrap;padding-left:14px;padding-right:14px}
 }
+
+@media(max-width:640px){
+  /* Fleet section: center the Self Drive / Chauffeur tab toggle */
+  .mode-toggle{display:flex;justify-content:center;width:100%}
+  .mode-btn{flex:1;text-align:center}
+
+  /* Reviews section: center the prev/next arrows instead of right-aligned */
+  .rev-nav{justify-content:center!important}
+
+  /* About Us: stack the stat marks vertically so they fill the width
+     instead of wrapping unevenly and leaving empty space beside them */
+  .about-marks{flex-direction:column;gap:20px}
+}
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:16px 32px;border-radius:2px;transition:.35s var(--ease);cursor:pointer;border:1px solid transparent}
 .btn-gold{background:var(--gold);color:#0a0a0a}
 .btn-gold:hover{background:#e0bc66;transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,75,.28)}
