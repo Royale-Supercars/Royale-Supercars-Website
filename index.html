@@ -176,6 +176,26 @@ body.loaded .hero-line:nth-child(2) span{transition-delay:.1s}
 body.loaded .hero-sub{opacity:1;transform:none}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(14px);transition:1s var(--ease) .6s}
 body.loaded .hero-ctas{opacity:1;transform:none}
+
+@media(max-width:640px){
+  header#home{display:flex;flex-direction:column}
+  .hero-inner{
+    display:flex;flex-direction:column;height:100%;
+    padding-top:clamp(90px,18vh,130px);
+    text-align:center;
+  }
+  .hero-tag{justify-content:center;margin:0 auto 16px}
+  h1{text-align:center}
+  .hero-foot{
+    display:flex;flex-direction:column;align-items:center;
+    margin-top:auto;padding-top:24px;
+  }
+  .hero-sub{max-width:100%;text-align:center;margin:0 auto}
+  .hero-ctas{
+    justify-content:center;flex-wrap:nowrap;width:100%;margin-top:20px;
+  }
+  .hero-ctas .btn{flex:1;text-align:center;white-space:nowrap;padding-left:14px;padding-right:14px}
+}
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:16px 32px;border-radius:2px;transition:.35s var(--ease);cursor:pointer;border:1px solid transparent}
 .btn-gold{background:var(--gold);color:#0a0a0a}
 .btn-gold:hover{background:#e0bc66;transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,75,.28)}
