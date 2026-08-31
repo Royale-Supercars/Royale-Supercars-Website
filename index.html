@@ -210,6 +210,11 @@ body.loaded .hero-ctas{opacity:1;transform:none}
   /* About Us: stack the stat marks vertically so they fill the width
      instead of wrapping unevenly and leaving empty space beside them */
   .about-marks{flex-direction:column;gap:20px}
+
+  /* Tighten vertical section spacing on mobile - the default padding
+     was stacking up between sections into a large empty gap. The
+     border-top on sections like #faq still marks a clear boundary. */
+  .wrap{padding-top:56px;padding-bottom:56px}
 }
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:16px 32px;border-radius:2px;transition:.35s var(--ease);cursor:pointer;border:1px solid transparent}
 .btn-gold{background:var(--gold);color:#0a0a0a}
@@ -360,6 +365,7 @@ img.lz.lz-on{opacity:1}
 
 /* ---------- about ---------- */
 #about{border-top:1px solid var(--line)}
+#faq{border-top:1px solid var(--line)}
 .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,90px);align-items:start}
 @media(max-width:880px){.about-grid{grid-template-columns:1fr}}
 .about-copy p{color:var(--muted);font-size:.98rem;margin-bottom:18px;max-width:560px}
