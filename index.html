@@ -1002,13 +1002,18 @@ $('#yr').textContent=new Date().getFullYear();
 (function(){
   const crest=document.querySelector('.logo .crest');
   const flips=$$('.why-flip');
+  const grid=document.querySelector('.why-grid');
   if(crest) $$('.fcrest').forEach(im=>im.src=crest.src);
+  if(!grid || !flips.length) return;
+  /* Trigger off the whole row entering view (not each card separately) so
+     desktop's side-by-side layout cascades the same way mobile's stacked
+     layout naturally does, instead of all cards flipping at once. */
   const fio=new IntersectionObserver(es=>es.forEach(en=>{
     if(!en.isIntersecting)return;
     fio.unobserve(en.target);
-    setTimeout(()=>en.target.classList.add('flipped'), 400+flips.indexOf(en.target)*180);
+    flips.forEach((f,i)=>setTimeout(()=>f.classList.add('flipped'), 400+i*180));
   }),{threshold:.35});
-  flips.forEach(f=>fio.observe(f));
+  fio.observe(grid);
 })();
 
 /* ---------- reveal ---------- */
