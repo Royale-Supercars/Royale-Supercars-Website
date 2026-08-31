@@ -187,13 +187,15 @@ body.loaded .hero-ctas{opacity:1;transform:none}
   }
   .hero-tag{justify-content:center;margin:0 auto 16px}
   h1{text-align:center}
-  .hero-foot{
-    display:flex;flex-direction:column;align-items:center;
-    margin-top:auto;padding-top:24px;
-  }
-  .hero-sub{max-width:100%;text-align:center;margin:0 auto}
+  /* Dissolve the wrapper so its two children (the description text and the
+     buttons) become independent flex items of hero-inner - this lets the
+     description stay up with the heading while only the buttons get
+     pushed to the bottom. */
+  .hero-foot{display:contents}
+  .hero-sub{max-width:100%;text-align:center;margin:16px auto 0}
   .hero-ctas{
-    justify-content:center;flex-wrap:nowrap;width:100%;margin-top:20px;
+    justify-content:center;flex-wrap:nowrap;width:100%;
+    margin-top:auto;padding-top:24px;
   }
   .hero-ctas .btn{flex:1;text-align:center;white-space:nowrap;padding-left:14px;padding-right:14px}
 }
