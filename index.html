@@ -108,11 +108,11 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:150;
   display:flex;align-items:center;justify-content:space-between;
   padding:16px clamp(22px,5vw,72px);
-  background:transparent;
-  transition:background .45s,padding .45s,border-color .45s;
+  background:rgba(5,5,5,calc(var(--nav-fade,0) * .96));
+  transition:padding .45s var(--ease),border-color .45s var(--ease);
   border-bottom:1px solid transparent;
 }
-nav.solid{background:rgba(5,5,5,.96);padding:11px clamp(22px,5vw,72px);border-color:var(--line)}
+nav.solid{padding:11px clamp(22px,5vw,72px);border-color:var(--line)}
 .logo{font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.3em;text-transform:uppercase;display:inline-flex;align-items:center;gap:16px;word-spacing:-.46em;margin-left:-18px}
 .logo .crest{height:34px;width:auto}
 .logo-nav{margin-left:0;gap:0}
@@ -982,10 +982,16 @@ $('#yr').textContent=new Date().getFullYear();
 /* ---------- nav behaviour ---------- */
 (function(){
   const nav=$('#nav');
-  /* clear at rest, solid black as soon as the page scrolls */
-  window.addEventListener('scroll',()=>{
-    nav.classList.toggle('solid',scrollY>24);
-  },{passive:true});
+  /* smooth fade: background opacity scales gradually with scroll position
+     over the first 140px, instead of snapping on/off at one point */
+  const FADE_DISTANCE = 140;
+  function updateNavFade(){
+    const progress = Math.min(scrollY / FADE_DISTANCE, 1);
+    nav.style.setProperty('--nav-fade', progress.toFixed(3));
+    nav.classList.toggle('solid', progress > 0.02);
+  }
+  window.addEventListener('scroll', updateNavFade, {passive:true});
+  updateNavFade();
   const burger=$('#burger'),m=$('#mmenu');
   const t=()=>{m.classList.toggle('open');document.body.classList.toggle('mopen')};
   burger.onclick=t;
