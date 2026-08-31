@@ -178,10 +178,11 @@ body.loaded .hero-sub{opacity:1;transform:none}
 body.loaded .hero-ctas{opacity:1;transform:none}
 
 @media(max-width:640px){
-  header#home{display:flex;flex-direction:column}
+  header#home{display:flex;flex-direction:column;align-items:stretch}
   .hero-inner{
-    display:flex;flex-direction:column;height:100%;
+    display:flex;flex-direction:column;flex:1 1 auto;
     padding-top:clamp(90px,18vh,130px);
+    padding-bottom:clamp(28px,6vh,48px);
     text-align:center;
   }
   .hero-tag{justify-content:center;margin:0 auto 16px}
