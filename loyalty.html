@@ -481,7 +481,10 @@ async function renderDash(){
   $('#refCount').textContent=(acc.referrals||[]).filter(r=>r.status==='completed'||r.status==='rewarded').length;
   $('#tripCount').textContent=(acc.trips||[]).filter(t=>t.status==='available'&&new Date(t.expires_at)>new Date()).length;
   $('#videoPct').textContent=CFG.VIDEO_PCT;
-  $('#videoBox').style.display=st.active>=CFG.CAP?'none':'block';
+  const hasVideo=acc.entries.some(e=>e.source==='Video review');
+  const hasStory=acc.entries.some(e=>e.source==='Story tag bonus');
+  $('#videoBox').style.display=(hasVideo||st.active>=CFG.CAP)?'none':'block';
+  $('#storyBox').style.display=(hasStory||st.active>=CFG.CAP)?'none':'block';
   $('#videoBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! Video review incoming from ${acc.name||s.email} - here it is:`)}`;
   $('#storyBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! I tagged @royale.supercars in my story - here's proof, from ${acc.name||s.email}:`)}`;
   $('#bookBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! I'd like to book a car. Rewards member ${acc.name||s.email}${st.active?` - ${st.active}% discount active`:''}.`)}`;
