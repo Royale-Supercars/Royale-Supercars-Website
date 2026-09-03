@@ -119,6 +119,12 @@ input:focus{border-color:var(--gold-soft)}
 .hist .pct{font-family:var(--display);font-weight:600;color:var(--gold)}
 .hist .exp{font-size:.68rem;color:var(--muted)}
 .hist li.expired{opacity:.45}
+.hist li.consumed{opacity:.45}
+.hist li{position:relative;flex-wrap:wrap;gap:6px 10px}
+.btn-use{font-family:inherit;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold-soft);border-radius:4px;padding:5px 12px;
+  text-decoration:none;transition:.25s;margin-left:auto}
+.btn-use:hover{background:var(--gold);color:#0a0a0a}
 .hist li.expired .pct{color:var(--muted);text-decoration:line-through}
 .dash-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
 .logout{margin-top:26px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;transition:color .3s}
@@ -467,12 +473,18 @@ async function renderDash(){
   $('#statLeft').textContent=st.left+'%';
   $('#statExpiry').textContent=fmtDate(st.nextExp);
   $('#statSince').textContent=fmtDate(acc.created_at?new Date(acc.created_at):null);
-  $('#histList').innerHTML=st.list.length?st.list.sort((a,b)=>new Date(b.granted_at)-new Date(a.granted_at)).map(e=>`
-    <li class="${e.expired?'expired':''}">
+  $('#histList').innerHTML=st.list.length?st.list.sort((a,b)=>new Date(b.granted_at)-new Date(a.granted_at)).map(e=>{
+    const waMsg=encodeURIComponent(`Hi Royale! I'd like to use my discount now - ${acc.name||s.email}, ${e.source} +${e.pct}%.`);
+    const useBtn=(!e.expired&&!e.consumed)?`<a class="btn-use" href="https://wa.me/${CFG.whatsapp}?text=${waMsg}" target="_blank" rel="noopener">Use</a>`:'';
+    const status=e.consumed?'used':(e.expired?'expired':'expires '+fmtDate(new Date(e.expires_at)));
+    return `
+    <li class="${e.expired?'expired':''}${e.consumed?' consumed':''}">
       <span class="src"><i></i>${e.source}</span>
-      <span class="exp">${e.expired?'expired':'expires'} ${fmtDate(new Date(e.expires_at))}</span>
+      <span class="exp">${status}</span>
       <span class="pct">+${e.pct}%</span>
-    </li>`).join(''):'<li><span class="src">No discounts yet - scan your Royale card to start.</span></li>';
+      ${useBtn}
+    </li>`;
+  }).join(''):'<li><span class="src">No discounts yet - scan your Royale card to start.</span></li>';
   /* referral block */
   const rc=acc.ref_code||'-';
   const refUrl=new URL('/',location.href); refUrl.search='?ref='+encodeURIComponent(rc);
