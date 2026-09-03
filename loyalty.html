@@ -271,6 +271,10 @@ footer a:hover{color:var(--gold)}
             <p><b>Add +<span id="videoPct">5</span>% -</b> send a short video review of your last rental on WhatsApp and we'll add it within the day.</p>
             <div style="margin-top:14px"><a class="btn btn-line" id="videoBtn" href="#" target="_blank" rel="noopener" style="padding:12px 22px">Submit video review</a></div>
           </div>
+          <div class="video-box" id="storyBox">
+            <p><b>Add +<span id="storyPct">5</span>% -</b> tag @royale.supercars in your Instagram or TikTok story, send us proof on WhatsApp, and we'll add it within the day.</p>
+            <div style="margin-top:14px"><a class="btn btn-line" id="storyBtn" href="#" target="_blank" rel="noopener" style="padding:12px 22px">Submit story tag</a></div>
+          </div>
         </div>
         <button class="logout" id="btnLogout">Log out</button>
       </div>
@@ -476,6 +480,7 @@ async function renderDash(){
   $('#videoPct').textContent=CFG.VIDEO_PCT;
   $('#videoBox').style.display=st.active>=CFG.CAP?'none':'block';
   $('#videoBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! Video review incoming from ${acc.name||s.email} - here it is:`)}`;
+  $('#storyBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! I tagged @royale.supercars in my story - here's proof, from ${acc.name||s.email}:`)}`;
   $('#bookBtn').href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(`Hi Royale! I'd like to book a car. Rewards member ${acc.name||s.email}${st.active?` - ${st.active}% discount active`:''}.`)}`;
 }
 
