@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Meta Pixel Code -->
+<!-- Royale tracking: Meta Pixel + Google Analytics are only loaded once
+     the visitor accepts cookies via the banner. See the cookie consent
+     script near the end of <body> for the logic that calls this. -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1083549027382323');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1083549027382323&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-76N65466MJ"></script>
-<script>
+window.royaleLoadTrackers = function(){
+  if(window.royaleTrackersLoaded) return;
+  window.royaleTrackersLoaded = true;
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1083549027382323');
+  fbq('track', 'PageView');
+
+  var gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-76N65466MJ';
+  document.head.appendChild(gaScript);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
   gtag('js', new Date());
   gtag('config', 'G-76N65466MJ');
+};
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,6 +161,23 @@ input:focus{border-color:var(--gold-soft)}
 footer{border-top:1px solid var(--line);background:#060606;padding:20px clamp(22px,5vw,72px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.68rem;letter-spacing:.08em;color:var(--muted)}
 footer a:hover{color:var(--gold)}
 .demo-flag{position:fixed;bottom:16px;left:16px;z-index:200;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;background:rgba(224,161,60,.14);border:1px solid rgba(224,161,60,.4);color:var(--warn);padding:6px 12px;border-radius:999px}
+#cookieBanner{
+  position:fixed;left:0;right:0;bottom:0;z-index:300;
+  display:none;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+  background:#0d0d0e;border-top:1px solid var(--line);
+  padding:16px clamp(22px,5vw,60px);
+}
+#cookieBanner p{margin:0;max-width:640px;line-height:1.6;font-family:var(--body);font-size:.82rem;color:var(--muted)}
+#cookieBanner a{color:var(--gold);text-decoration:underline;text-underline-offset:2px}
+.cookie-actions{display:flex;gap:10px;flex-shrink:0}
+.cookie-actions button{
+  font-family:var(--display);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:11px 22px;border-radius:3px;cursor:pointer;border:1px solid var(--line);background:none;color:var(--text);
+  transition:.3s var(--ease);
+}
+#cookieAccept{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+#cookieDecline:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:640px){#cookieBanner{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -215,7 +237,7 @@ footer a:hover{color:var(--gold)}
 
 <div class="tc-section" id="no-deposit">
   <h2>2. No-Deposit Policy</h2>
-  <p>Royale Supercars does not require a separate refundable security deposit. The cost of offering this no-deposit service is already included in the rental price shown to you at the time of booking &mdash; there is no additional deposit fee charged separately.</p>
+  <p>Royale Supercars does not require a separate refundable security deposit. The cost of offering this no-deposit service is already included in the rental price shown to you at the time of booking. There is no additional deposit fee charged separately.</p>
 </div>
 
 <div class="tc-section" id="mileage">
@@ -283,6 +305,45 @@ document.getElementById('tcDate').textContent = new Date().toLocaleDateString('e
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+<div id="cookieBanner" role="region" aria-label="Cookie notice">
+  <p>We use cookies for analytics and advertising, including Meta Pixel and Google Analytics, to understand site usage and improve our ads. See our <a href="/privacy">Privacy Policy</a> for details.</p>
+  <div class="cookie-actions">
+    <button id="cookieDecline">Decline</button>
+    <button id="cookieAccept">Accept</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var consent = null;
+  try{ consent = localStorage.getItem('royaleCookieConsent'); }catch(e){}
+  var banner = document.getElementById('cookieBanner');
+
+  if(consent === 'accepted'){
+    if(window.royaleLoadTrackers) window.royaleLoadTrackers();
+    return;
+  }
+  if(consent === 'declined'){
+    return;
+  }
+
+  if(banner){
+    banner.style.display = 'flex';
+    var acceptBtn = document.getElementById('cookieAccept');
+    var declineBtn = document.getElementById('cookieDecline');
+    if(acceptBtn) acceptBtn.addEventListener('click', function(){
+      try{ localStorage.setItem('royaleCookieConsent','accepted'); }catch(e){}
+      if(window.royaleLoadTrackers) window.royaleLoadTrackers();
+      banner.style.display = 'none';
+    });
+    if(declineBtn) declineBtn.addEventListener('click', function(){
+      try{ localStorage.setItem('royaleCookieConsent','declined'); }catch(e){}
+      banner.style.display = 'none';
+    });
+  }
+})();
 </script>
 </body>
 </html>
