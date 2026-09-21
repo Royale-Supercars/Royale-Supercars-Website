@@ -177,22 +177,27 @@ footer{border-top:1px solid var(--line);background:#060606;padding:20px clamp(22
 footer a:hover{color:var(--gold)}
 .demo-flag{position:fixed;bottom:16px;left:16px;z-index:200;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;background:rgba(224,161,60,.14);border:1px solid rgba(224,161,60,.4);color:var(--warn);padding:6px 12px;border-radius:999px}
 #cookieBanner{
-  position:fixed;left:0;right:0;bottom:0;z-index:300;
-  display:none;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
-  background:#0d0d0e;border-top:1px solid var(--line);
-  padding:16px clamp(22px,5vw,60px);
+  position:fixed;right:24px;bottom:24px;left:auto;z-index:300;
+  display:none;flex-direction:column;gap:16px;
+  width:min(400px,calc(100vw - 48px));
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;
+  padding:24px 26px;box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
-#cookieBanner p{margin:0;max-width:640px;line-height:1.6;font-family:var(--body);font-size:.82rem;color:var(--muted)}
+#cookieBanner h4{margin:0;font-family:var(--display);font-size:1.05rem;font-weight:700;color:var(--text)}
+#cookieBanner p{margin:0;line-height:1.65;font-family:var(--body);font-size:.85rem;color:var(--muted)}
 #cookieBanner a{color:var(--gold);text-decoration:underline;text-underline-offset:2px}
-.cookie-actions{display:flex;gap:10px;flex-shrink:0}
+.cookie-actions{display:flex;gap:10px;flex-shrink:0;margin-top:2px}
 .cookie-actions button{
-  font-family:var(--display);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  padding:11px 22px;border-radius:3px;cursor:pointer;border:1px solid var(--line);background:none;color:var(--text);
+  flex:1;font-family:var(--display);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:13px 18px;border-radius:5px;cursor:pointer;border:1px solid var(--line);background:none;color:var(--text);
   transition:.3s var(--ease);
 }
 #cookieAccept{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+#cookieAccept:hover{background:#dab55c;border-color:#dab55c}
 #cookieDecline:hover{border-color:var(--gold);color:var(--gold)}
-@media(max-width:640px){#cookieBanner{flex-direction:column;align-items:flex-start}}
+@media(max-width:640px){
+  #cookieBanner{right:16px;left:16px;bottom:16px;width:auto}
+}
 </style>
 </head>
 <body>
@@ -337,7 +342,8 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 
 <div id="cookieBanner" role="region" aria-label="Cookie notice">
-  <p>We use cookies for analytics and advertising, including Meta Pixel and Google Analytics, to understand site usage and improve our ads. See our <a href="/privacy">Privacy Policy</a> for details.</p>
+  <h4>Cookies on Royale Supercars</h4>
+  <p>We use essential cookies to run this site. With your permission, we'd also like to use Meta Pixel and Google Analytics to understand site usage and improve our ads. Analytics stays off until you accept. <a href="/privacy">Read our Privacy Policy</a>.</p>
   <div class="cookie-actions">
     <button id="cookieDecline">Decline</button>
     <button id="cookieAccept">Accept</button>
