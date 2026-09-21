@@ -160,13 +160,33 @@ nav.solid{padding:11px clamp(22px,5vw,72px);border-color:var(--line)}
 .burger i{display:block;width:24px;height:1.5px;background:var(--text);transform-origin:center;transition:transform .35s var(--ease),opacity .25s var(--ease)}
 @media(max-width:860px){.nav-book{display:none}}
 @media(max-width:640px){.nav-links{display:none}.burger{display:flex}}
-.mmenu{position:fixed;inset:0;background:rgba(8,8,8,.97);backdrop-filter:blur(8px);z-index:101;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;opacity:0;visibility:hidden;transition:.5s}
-.mmenu.open{opacity:1;visibility:visible}
-.mmenu a{font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:.06em;opacity:0;transform:translateY(14px);transition:.5s var(--ease)}
-.mmenu.open a{opacity:1;transform:none}
-.mmenu.open a:nth-child(2){transition-delay:.05s}.mmenu.open a:nth-child(3){transition-delay:.1s}
-.mmenu.open a:nth-child(4){transition-delay:.15s}.mmenu.open a:nth-child(5){transition-delay:.2s}
-.mmenu a:hover{color:var(--gold)}
+.mmenu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:155;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s}
+.mmenu-backdrop.open{opacity:1;visibility:visible}
+.mmenu{
+  position:fixed;top:0;right:0;height:100%;width:min(320px,82vw);
+  background:var(--bg-soft);border-left:1px solid var(--line);
+  z-index:160;display:flex;flex-direction:column;
+  padding:0;transform:translateX(100%);
+  transition:transform .45s var(--ease);
+  overflow-y:auto;box-shadow:-20px 0 50px rgba(0,0,0,.4);
+}
+.mmenu.open{transform:translateX(0)}
+.mmenu-head{display:flex;align-items:center;justify-content:space-between;padding:22px 22px 18px;border-bottom:1px solid var(--line)}
+.mmenu-head img{height:26px;width:auto}
+.mmenu-close{background:none;border:0;color:var(--muted);font-size:1.7rem;line-height:1;cursor:pointer;padding:2px 6px}
+.mmenu-close:hover{color:var(--gold)}
+.mmenu a{
+  font-family:var(--body);font-size:.92rem;font-weight:600;letter-spacing:.01em;
+  color:var(--text);padding:17px 22px;border-bottom:1px solid var(--line);
+}
+.mmenu a:hover{color:var(--gold);background:rgba(201,162,75,.06)}
+.mmenu a.mmenu-cta{
+  color:#0a0a0a;background:var(--gold);margin:18px 22px 22px;border-radius:3px;
+  text-align:center;border-bottom:0;font-family:var(--display);
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;padding:15px 20px;
+}
+.mmenu a.mmenu-cta:hover{background:#dab55c;color:#0a0a0a}
+body.mopen{overflow:hidden}
 body.mopen .burger i:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
 body.mopen .burger i:nth-child(2){opacity:0;transform:scaleX(0)}
 body.mopen .burger i:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
@@ -534,14 +554,19 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
     <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
   </div>
 </nav>
+<div class="mmenu-backdrop" id="mmenuBackdrop"></div>
 <div class="mmenu" id="mmenu">
+  <div class="mmenu-head">
+    <img src="images/img_003.png" alt="Royale Supercars">
+    <button class="mmenu-close" id="mmenuClose" aria-label="Close menu">&times;</button>
+  </div>
   <a href="#home">Home</a>
   <a href="#fleet">Fleet</a>
   <a href="#reviews">Reviews</a>
   <a href="#about">About Us</a>
   <a href="#faq">FAQs</a>
   <a href="/loyalty">Loyalty</a>
-  <a href="#" class="js-wa" style="color:var(--gold)">Book via WhatsApp</a>
+  <a href="#" class="js-wa mmenu-cta">Book via WhatsApp</a>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -1073,8 +1098,12 @@ $('#yr').textContent=new Date().getFullYear();
   }
   window.addEventListener('scroll', updateNavFade, {passive:true});
   updateNavFade();
-  const burger=$('#burger'),m=$('#mmenu');
-  const t=()=>{m.classList.toggle('open');document.body.classList.toggle('mopen')};
+  const burger=$('#burger'),m=$('#mmenu'),backdrop=$('#mmenuBackdrop'),closeBtn=$('#mmenuClose');
+  const t=()=>{
+    m.classList.toggle('open');
+    backdrop.classList.toggle('open');
+    document.body.classList.toggle('mopen');
+  };
 
   /* WhatsApp float button + badge: hidden over the hero, fade in together
      once the visitor has scrolled past the hero into the next section.
@@ -1094,6 +1123,8 @@ $('#yr').textContent=new Date().getFullYear();
     updateWaVisibility();
   }
   burger.onclick=t;
+  if(closeBtn) closeBtn.onclick=t;
+  if(backdrop) backdrop.onclick=t;
   m.querySelectorAll('a').forEach(a=>a.addEventListener('click',t));
 })();
 
