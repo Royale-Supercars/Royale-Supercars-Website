@@ -787,6 +787,7 @@ const IMG={
   urus:{front:'images/img_018.jpg',rear:'images/img_019.jpg',side:'images/img_020.jpg',dash:'images/img_021.jpg',seats:'images/img_022.jpg'},
   g63purple:{front:'images/img_023.jpg',rear:'images/img_024.jpg',doorOpen:'images/img_025.jpg',wheel:'images/img_026.jpg',seats:'images/img_027.jpg',dash:'images/img_028.jpg'},
   escalade:{side:'images/img_029.jpg',front:'images/img_030.jpg',captains:'images/img_031.jpg',dash:'images/img_032.jpg',midCabin:'images/img_033.jpg',rearScreens:'images/img_034.jpg'},
+  vclassRoyale:{front:'images/img_045.jpg',rear:'images/img_046.jpg',lounge:'images/img_047.jpg',rearScreens:'images/img_048.jpg',midCabin:'images/img_049.jpg'},
 };
 const CONFIG = {
   whatsapp: '971585820284',                      // REPLACE - digits only, country code first
@@ -801,20 +802,20 @@ const CONFIG = {
   supercars: [
     {brand:'Brabus', name:'G63 2025', price:'1,600', type:'Luxury SUV', seats:5,
      feats:['White / Purple','Tuned exhaust','Widebody kit'],
-     images:[IMG.g63purple.front, IMG.g63purple.rear, IMG.g63purple.doorOpen, IMG.g63purple.seats, IMG.g63purple.dash]},  // 5 of: front, rear, doorOpen, wheel, seats, dash
+     images:[{src:IMG.g63purple.front,view:'front exterior view'}, {src:IMG.g63purple.rear,view:'rear exterior view'}, {src:IMG.g63purple.doorOpen,view:'door open interior view'}, {src:IMG.g63purple.seats,view:'leather interior seats'}, {src:IMG.g63purple.dash,view:'dashboard and interior'}]},
     {brand:'Brabus', name:'G63 2023', price:'1,600', type:'Luxury SUV', seats:5, feats:['Black / Orange','Tuned exhaust','Widebody kit'],
-     images:[IMG.g63orange.front, IMG.g63orange.rear, IMG.g63orange.wheel, IMG.g63orange.seats, IMG.g63orange.dash]},  // 5 of: front, rear, wheel, dash, seats
+     images:[{src:IMG.g63orange.front,view:'front exterior view'}, {src:IMG.g63orange.rear,view:'rear exterior view'}, {src:IMG.g63orange.wheel,view:'alloy wheel detail'}, {src:IMG.g63orange.seats,view:'leather interior seats'}, {src:IMG.g63orange.dash,view:'dashboard and interior'}]},
     {brand:'Lamborghini', name:'Huracán EVO Spyder', price:'2,700', type:'Convertible supercar', seats:2, feats:['Yellow / Black','Convertible','V10 engine'],
-     images:[IMG.huracan.front, IMG.huracan.rear34, IMG.huracan.rear, IMG.huracan.seats, IMG.huracan.dash]},  // 5 of: front, rear34, rear, wheel, seats, dash
+     images:[{src:IMG.huracan.front,view:'front exterior view'}, {src:IMG.huracan.rear34,view:'rear three-quarter view'}, {src:IMG.huracan.rear,view:'rear exterior view'}, {src:IMG.huracan.seats,view:'leather interior seats'}, {src:IMG.huracan.dash,view:'dashboard and interior'}]},
     {brand:'Lamborghini', name:'Urus', price:'2,400', type:'Luxury SUV', seats:5, feats:['Yellow / Yellow','Twin-turbo V8'],
-     images:[IMG.urus.front, IMG.urus.side, IMG.urus.rear, IMG.urus.seats, IMG.urus.dash]},  // 5 of: front, rear, side, dash, seats
+     images:[{src:IMG.urus.front,view:'front exterior view'}, {src:IMG.urus.side,view:'side profile view'}, {src:IMG.urus.rear,view:'rear exterior view'}, {src:IMG.urus.seats,view:'leather interior seats'}, {src:IMG.urus.dash,view:'dashboard and interior'}]},
   ],
   chauffeur: [
-    {brand:'Mercedes-Maybach', name:'V-Class - Prestige', price:'1,799', type:'VIP luxury van', seats:6, feats:['Massage & reclining seats','PS5 & TV','Coffee machine'], allFeats:['Professional chauffeur included','Fuel & Salik road tolls included','Massaging, reclining & temperature-controlled captain seats','iPad master control','Large TV screen','Surround sound system','Driver intercom','PS5 onboard','Coffee machine','Fridge','Glasses & coffee mugs','Folding tables & desks','Charging points','Storage cupboards','Onboard WiFi'], images:[]},
-    {brand:'Mercedes-Maybach', name:'V-Class - Royal', price:'1,799', type:'VIP luxury van', seats:6, feats:['Massage & reclining seats','PS5 & TV','Rising bar'], allFeats:['Professional chauffeur included','Fuel & Salik road tolls included','Massaging, reclining & temperature-controlled captain seats','Screen master control','Large TV screen','Surround sound system','Rising bar','PS5 onboard','Fridge','Glasses','Folding tables & desks','Charging points','Storage cupboards','Onboard WiFi'], images:[]},
+    {brand:'Mercedes-Maybach', name:'V-Class - Royale', price:'1,799', type:'VIP luxury van', seats:6, feats:['Massage & reclining seats','PS5 & TV','Rising bar'], allFeats:['Professional chauffeur included','Fuel & Salik road tolls included','Massaging, reclining & temperature-controlled captain seats','Screen master control','Large TV screen','Surround sound system','Rising bar','PS5 onboard','Fridge','Glasses','Folding tables & desks','Charging points','Storage cupboards','Onboard WiFi'],
+     images:[{src:IMG.vclassRoyale.front,view:'front exterior view'}, {src:IMG.vclassRoyale.rear,view:'rear exterior view'}, {src:IMG.vclassRoyale.lounge,view:'rear lounge seating interior'}, {src:IMG.vclassRoyale.rearScreens,view:'rear entertainment screen'}, {src:IMG.vclassRoyale.midCabin,view:'mid-cabin interior with folding tables'}]},
     {brand:'Cadillac', name:'Escalade 2025', price:'1,499', type:'Full-size luxury SUV', seats:6,
      feats:['Green / Beige','Rear screens','Panoramic roof'], allFeats:['Professional chauffeur included','Fuel & Salik road tolls included','6 captain-style seats','Rear entertainment screens','Panoramic sunroof','Onboard Wi-Fi','Chilled water & refreshments','Airport meet & greet'],
-     images:[IMG.escalade.side, IMG.escalade.front, IMG.escalade.captains, IMG.escalade.midCabin, IMG.escalade.dash]},  // 5 of: side, front, captains, midCabin, rearScreens, dash
+     images:[{src:IMG.escalade.side,view:'side profile view'}, {src:IMG.escalade.front,view:'front exterior view'}, {src:IMG.escalade.captains,view:'captain seats interior'}, {src:IMG.escalade.midCabin,view:'mid-cabin interior'}, {src:IMG.escalade.dash,view:'dashboard and interior'}]},
   ],
 
   /* Reviews - swap img:null for a path to the real screenshot and it replaces the styled card */
@@ -864,7 +865,7 @@ if(CONFIG.heroImage){
 /* ---------- fleet ---------- */
 function slideHTML(c,i,total){
   if(c.images && c.images.length){
-    return c.images.map(src=>`<div class="car-slide"><img class="lz" src="${src}" alt="${c.brand} ${c.name}" loading="lazy" onload="this.classList.add('lz-on')"></div>`).join('');
+    return c.images.map(img=>`<div class="car-slide"><img class="lz" src="${img.src}" alt="${c.brand} ${c.name} ${img.view} - Dubai luxury car rental" loading="lazy" onload="this.classList.add('lz-on')"></div>`).join('');
   }
   /* three placeholder slides with subtle variation */
   return [0,1,2].map(k=>`
