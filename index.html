@@ -531,6 +531,22 @@ if(location.pathname.toLowerCase().endsWith('/index.html')){
   history.replaceState(null, '', clean || '/');
 }
 </script>
+<script>
+/* Smooth-scroll to in-page sections (Home, Fleet, Reviews, About, FAQs)
+   without ever adding a #hash to the address bar. Keeps the URL clean
+   (just royalesupercars.com/) instead of showing #home, #about, etc.
+   after clicking a nav link. */
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a[href^="#"]');
+  if(!a) return;
+  var id = a.getAttribute('href').slice(1);
+  var target = id ? document.getElementById(id) : null;
+  if(target){
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+});
+</script>
 
 <nav id="nav">
   <a href="#home" class="logo logo-nav" aria-label="Royale Supercars"><img class="crest" src="images/img_003.png" alt="Royale Supercars"></a>
