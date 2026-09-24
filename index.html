@@ -544,7 +544,14 @@ document.addEventListener('click', function(e){
   if(target){
     e.preventDefault();
     target.scrollIntoView({behavior:'smooth', block:'start'});
+    if(location.hash){ history.replaceState(null, '', location.pathname + location.search); }
   }
+}, true);
+
+/* Safety net: if a #hash ever ends up in the URL by any other route,
+   strip it immediately so the address bar always stays clean. */
+window.addEventListener('hashchange', function(){
+  history.replaceState(null, '', location.pathname + location.search);
 });
 </script>
 
