@@ -740,7 +740,7 @@ window.addEventListener('hashchange', function(){
         <div class="kicker rv">FAQ</div>
         <h2 class="h2 rv rv-1">Good to know.</h2>
         <p class="sub rv rv-2">Answers to what we get asked most. Anything else - we reply on WhatsApp within minutes.</p>
-        <div style="margin-top:30px" class="rv rv-3"><a href="#" class="btn btn-line js-wa">Ask a question</a></div>
+        <div style="margin-top:30px" class="rv rv-3"><a href="#" class="btn btn-line js-wa" id="faqAskBtn">Ask a question</a></div>
       </div>
       <div id="faqList" class="rv rv-1"></div>
     </div>
@@ -844,7 +844,7 @@ const IMG={
 };
 const CONFIG = {
   whatsapp: '971585820284',                      // REPLACE - digits only, country code first
-  waMessage: "Hi Royale Supercars! I'd like to book the {car}.",
+  waMessage: "Hi! I'm interested in the {car}, could you tell me about availability and pricing?",
   instagram: 'royale.supercars',                 // REPLACE with real handle
   tiktok: 'royale.supercars',                    // REPLACE with real handle
   heroImage: HERO_EMBEDDED,                      // embedded photo; or set to a path e.g. 'images/hero.jpg'
@@ -898,7 +898,10 @@ const CONFIG = {
 
 /* ========================================================= */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const waLink=car=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.waMessage.replace('{car}',car||'a car'))}`;
+const waLink=car=>{
+  const msg = car ? CONFIG.waMessage.replace('{car}',car) : "Hi Royale Supercars, I'm interested in booking one of your cars. What's available?";
+  return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+};
 
 /* ---------- hero image ---------- */
 if(CONFIG.heroImage){
@@ -1111,6 +1114,10 @@ $('#faqList').addEventListener('click',e=>{
 
 /* ---------- whatsapp links / misc ---------- */
 $$('.js-wa').forEach(a=>{a.href=waLink();a.target='_blank';a.rel='noopener'});
+const faqAskBtn=document.getElementById('faqAskBtn');
+if(faqAskBtn){
+  faqAskBtn.href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Hi! I had a quick question, is now a good time to chat?")}`;
+}
 $('#yr').textContent=new Date().getFullYear();
 
 /* ---------- nav behaviour ---------- */
@@ -1341,7 +1348,7 @@ setTimeout(()=>document.body.classList.add('loaded'),1200); /* fallback */
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeOverlay(); });
 
   if(waBtn && typeof waLink === 'function'){
-    waBtn.href = waLink('a car, 5% off my first booking');
+    waBtn.href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent("Hi! I saw the 5% off offer for first-time bookings, I'd like to claim that please!")}`;
     waBtn.target = '_blank';
     waBtn.rel = 'noopener';
     waBtn.addEventListener('click', function(){
