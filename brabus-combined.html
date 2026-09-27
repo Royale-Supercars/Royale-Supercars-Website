@@ -122,9 +122,20 @@ p{margin:0}
 .rail{display:flex; gap:12px; overflow-x:auto; padding-bottom:12px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch}
 .rail::-webkit-scrollbar{height:4px}
 .rail::-webkit-scrollbar-thumb{background:var(--line-2)}
-.rev{flex:0 0 218px; scroll-snap-align:start; border:1px solid var(--line); background:var(--panel)}
-.rev img{width:100%; height:auto}
-.rev figcaption{font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); padding:9px 11px; border-top:1px solid var(--line); display:flex; gap:6px; align-items:center}
+.rev-nav{display:flex; gap:10px; justify-content:flex-end; margin-bottom:12px}
+.rnav{width:40px; height:40px; border-radius:50%; border:1px solid var(--line-2); background:none; color:var(--text); cursor:pointer; font-size:.95rem; transition:.3s}
+.rnav:hover{border-color:var(--gold); color:var(--gold)}
+.rev{flex:0 0 240px; scroll-snap-align:start; border:1px solid rgba(201,162,75,.35); border-radius:12px; overflow:hidden; background:#101011; cursor:pointer; transition:transform .35s cubic-bezier(.25,.8,.25,1), box-shadow .35s}
+.rev:hover{transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.rev img{width:100%; height:auto; display:block}
+.rev figcaption{font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); padding:10px 12px; border-top:1px solid var(--line); background:#0d0d0e; display:flex; gap:6px; align-items:center}
+.genuine-note{text-align:center; font-size:13px; color:var(--muted); margin-top:16px}
+.genuine-note b{color:var(--gold); font-weight:600}
+#lb{position:fixed; inset:0; z-index:300; background:rgba(5,5,5,.9); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:.4s}
+#lb.open{opacity:1; visibility:visible}
+#lb img{max-width:92vw; max-height:86vh; border-radius:8px}
+#lb .x{position:absolute; top:18px; right:20px; background:none; border:1px solid var(--line-2); color:#fff; width:40px; height:40px; border-radius:50%; font-size:20px; cursor:pointer; line-height:1}
+#lb .x:hover{border-color:var(--gold); color:var(--gold)}
 .revnote{font-size:13px; color:var(--muted); display:flex; gap:8px; align-items:flex-start}
 .revnote b{color:var(--text); font-weight:600}
 .revfallback{border:1px dashed var(--line-2); padding:16px; font-size:13.5px; color:var(--muted)}
@@ -317,7 +328,9 @@ alt="The 2025 Brabus G63 in white with purple details, parked in Dubai">
 <h2>Do not take it from us.<br>Take it from the people who paid.</h2>
 <p class="lede">Real, unedited WhatsApp conversations with Royale clients, not screenshots of a review site.</p>
 </div>
-<div class="rail" id="revrail"><figure class="rev"><img src="https://royalesupercars.com/images/img_035.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_036.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_037.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_038.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_039.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_040.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_041.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_042.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_043.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_044.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption>&#10003; Verified &middot; WhatsApp</figcaption></figure></div>
+<div class="rev-nav"><button class="rnav" id="rPrev" aria-label="Previous">←</button><button class="rnav" id="rNext" aria-label="Next">→</button></div>
+<div class="rail" id="revrail"><figure class="rev"><img src="https://royalesupercars.com/images/img_035.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_036.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_037.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_038.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_039.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_040.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_041.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_042.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_043.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure><figure class="rev"><img src="https://royalesupercars.com/images/img_044.jpg" alt="Verified WhatsApp review from a Royale Supercars client" loading="lazy" decoding="async"><figcaption><span>✓ Verified review</span><span style="margin-left:auto;color:var(--muted);font-weight:400;letter-spacing:.1em">WhatsApp</span></figcaption></figure></div>
+<p class="genuine-note"><b>✓ 100% genuine.</b> Every review is a real, unedited WhatsApp conversation with a Royale client, verified by us.</p>
 </div></section>
 
 <section id="rewards"><div class="wrap stack g20">
@@ -397,6 +410,49 @@ document.querySelectorAll('a.cta').forEach(function(a){
     else if(a.closest('#plan-week')) label = 'week_plan';
     if(typeof fbq === 'function'){ fbq('track', 'Contact', {plan: label}); }
     if(typeof gtag === 'function'){ gtag('event', 'click_whatsapp', {page_variant: 'combined', plan: label}); }
+  });
+});
+</script>
+
+<div id="lb"><button class="x" aria-label="Close">×</button><img id="lbImg" src="" alt="Review, enlarged"></div>
+
+<script>
+/* Reviews: prev/next scroll buttons + click-to-zoom lightbox, matching
+   the main site's reviews behaviour. */
+(function(){
+  var rail = document.getElementById('revrail');
+  var prev = document.getElementById('rPrev');
+  var next = document.getElementById('rNext');
+  if(rail && prev && next){
+    prev.addEventListener('click', function(){ rail.scrollBy({left:-260, behavior:'smooth'}); });
+    next.addEventListener('click', function(){ rail.scrollBy({left:260, behavior:'smooth'}); });
+  }
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lbImg');
+  if(rail && lb && lbImg){
+    rail.querySelectorAll('img').forEach(function(im){
+      im.addEventListener('click', function(){
+        lbImg.src = im.src;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    var closeLb = function(){ lb.classList.remove('open'); document.body.style.overflow = ''; };
+    lb.querySelector('.x').addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if(e.target.id === 'lb') closeLb(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+  }
+})();
+
+/* FAQ: only one answer open at a time, matching the main site's accordion
+   behaviour instead of independent native <details> elements. */
+document.querySelectorAll('#faq details').forEach(function(d){
+  d.addEventListener('toggle', function(){
+    if(d.open){
+      document.querySelectorAll('#faq details').forEach(function(other){
+        if(other !== d) other.open = false;
+      });
+    }
   });
 });
 </script>
