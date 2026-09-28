@@ -10,6 +10,9 @@
 <meta property="og:image" content="https://royalesupercars.com/images/img_023.jpg">
 <meta name="robots" content="noindex,nofollow">
 <title>Brabus G63 2025 &middot; Royale Supercars Dubai</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://royalesupercars.com/images/img_000.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://royalesupercars.com/images/img_001.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://royalesupercars.com/images/img_002.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@400;500;600;700&family=Archivo:wght@700;800&display=swap">
 <style>
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
@@ -142,9 +145,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold); outline-offs
 @media (max-width:420px){ .spec{grid-template-columns:1fr} .stats{grid-template-columns:1fr} }
 
 /* hero image */
-.heroimg{position:relative; border:1px solid var(--line); background:var(--panel)}
-.heroimg img{width:100%; height:auto}
-.heroimg .tag{position:absolute; left:0; bottom:0; background:rgba(8,8,8,.82); backdrop-filter:blur(6px); color:var(--text); font-family:var(--display); font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; padding:8px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line)}
+.heroimg{position:relative; border:1px solid var(--line); background:var(--panel); aspect-ratio:7/5; overflow:hidden}
+.heroimg .car-slides{position:relative; height:100%; touch-action:pan-y; user-select:none; -webkit-user-select:none}
+.heroimg .car-slide{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .55s var(--ease); pointer-events:none}
+.heroimg .car-slide.on{opacity:1; pointer-events:auto}
+.heroimg .car-slide img{width:100%; height:100%; object-fit:cover; pointer-events:none}
+.heroimg .car-dots{position:absolute; bottom:12px; left:0; right:0; display:flex; justify-content:center; gap:6px; z-index:3; pointer-events:none}
+.heroimg .car-dots i{width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.35); transition:.3s}
+.heroimg .car-dots i.on{background:var(--gold); transform:scale(1.25)}
+.heroimg .car-arrow{position:absolute; top:50%; transform:translateY(-50%); z-index:3; width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,.22); background:rgba(8,8,8,.45); backdrop-filter:blur(4px); color:#fff; font-size:.85rem; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:.35s}
+.heroimg .car-arrow.prev{left:12px} .heroimg .car-arrow.next{right:12px}
+.heroimg:hover .car-arrow{opacity:1}
+.heroimg .car-arrow:hover{border-color:var(--gold); color:var(--gold); background:rgba(8,8,8,.7)}
+@media(hover:none){.heroimg .car-arrow{display:none}}
+.heroimg .tag{position:absolute; left:0; bottom:0; z-index:3; background:rgba(8,8,8,.82); backdrop-filter:blur(6px); color:var(--text); font-family:var(--display); font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; padding:8px 12px; border-top:1px solid var(--line); border-right:1px solid var(--line)}
 .heroimg .tag b{color:var(--gold); font-weight:600}
 
 /* micro trust bar under CTA */
@@ -280,9 +294,13 @@ src="https://www.facebook.com/tr?id=1445089357494410&ev=PageView&noscript=1"
 <p class="eyebrow rv" id="kicker">Brabus G63 2025 &middot; Self-drive &middot; Dubai</p>
 <h1 class="rv rv-1">AED 1,800 a day.<br>Or pay 5 days, keep 7.</h1>
 <p class="lede rv rv-2">No deposit held. No delivery fee. Nothing added at handover. Pick the one that suits your trip and ask on WhatsApp. You get the price in writing before you commit to anything.</p>
-<div class="heroimg rv rv-2"><img class="lz" onload="this.classList.add('lz-on')" src="https://royalesupercars.com/images/img_023.jpg" width="1400" height="1037" fetchpriority="high"
-alt="The 2025 Brabus G63 in white with purple details, parked in Dubai">
-<div class="tag">White on purple &middot; <b>Brabus widebody</b> &middot; 2025</div></div>
+<div class="heroimg rv rv-2">
+<div class="car-slides"><div class="car-slide"><img class="lz" src="https://royalesupercars.com/images/img_023.jpg" alt="Brabus G63 2025 front exterior view - Dubai luxury car rental" loading="eager" fetchpriority="high" onload="this.classList.add('lz-on')"></div><div class="car-slide"><img class="lz" src="https://royalesupercars.com/images/img_024.jpg" alt="Brabus G63 2025 rear exterior view - Dubai luxury car rental" loading="lazy" onload="this.classList.add('lz-on')"></div><div class="car-slide"><img class="lz" src="https://royalesupercars.com/images/img_025.jpg" alt="Brabus G63 2025 door open interior view - Dubai luxury car rental" loading="lazy" onload="this.classList.add('lz-on')"></div><div class="car-slide"><img class="lz" src="https://royalesupercars.com/images/img_027.jpg" alt="Brabus G63 2025 leather interior seats - Dubai luxury car rental" loading="lazy" onload="this.classList.add('lz-on')"></div><div class="car-slide"><img class="lz" src="https://royalesupercars.com/images/img_028.jpg" alt="Brabus G63 2025 dashboard and interior - Dubai luxury car rental" loading="lazy" onload="this.classList.add('lz-on')"></div></div>
+<div class="car-dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<button class="car-arrow prev" type="button" aria-label="Previous photo">←</button>
+<button class="car-arrow next" type="button" aria-label="Next photo">→</button>
+<div class="tag">White on purple &middot; <b>Brabus widebody</b> &middot; 2025</div>
+</div>
 
 <div class="plans rv">
 <div class="plan" id="plan-day">
@@ -475,6 +493,33 @@ document.querySelectorAll('img.lz').forEach(function(im){ if(im.complete && im.n
   });
   window.addEventListener('resize', function(){
     var o = list.querySelector('.fq.open .ans'); if(o) o.style.maxHeight = o.scrollHeight + 'px';
+  });
+})();
+</script>
+<script>
+/* Hero photo carousel: same crossfade + dots + arrows + swipe as the main
+   site's fleet cards, applied to the single hero slider on this page. */
+(function(){
+  var sl = document.querySelector('.heroimg');
+  if(!sl) return;
+  var track = sl.querySelector('.car-slides');
+  var slides = [].slice.call(track.querySelectorAll('.car-slide'));
+  var dots = [].slice.call(sl.querySelectorAll('.car-dots i'));
+  var n = slides.length, i = 0;
+  slides[0].classList.add('on');
+  var go = function(k){
+    i = (k + n) % n;
+    slides.forEach(function(s, x){ s.classList.toggle('on', x === i); });
+    dots.forEach(function(d, x){ d.classList.toggle('on', x === i); });
+  };
+  sl.querySelector('.prev').addEventListener('click', function(e){ e.preventDefault(); go(i - 1); });
+  sl.querySelector('.next').addEventListener('click', function(e){ e.preventDefault(); go(i + 1); });
+  var sx = null;
+  track.addEventListener('pointerdown', function(e){ sx = e.clientX; });
+  track.addEventListener('pointerup', function(e){
+    if(sx === null) return;
+    var dx = e.clientX - sx; sx = null;
+    if(Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1));
   });
 })();
 </script>
